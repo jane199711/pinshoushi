@@ -1,6 +1,6 @@
 [build]
   command = "NITRO_PRESET=netlify vite build"
-  publish = ".output/public"
+  publish = "dist"
 
 [dev]
   command = "vite dev"
