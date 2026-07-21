@@ -1,0 +1,289 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* 白无常可可体（免费商用，作者：白无常设计工作室）— 用于方格便签碎片 */
+@font-face {
+  font-family: "BaiWuKeKe";
+  src: url("/fonts/baiwu-keke.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 寒蝉手拙体（免费商用，作者：萧熠Siue / 寒蝉字型）— 用于牛皮纸牌 */
+@font-face {
+  font-family: "HanChanShouZhuo";
+  src: url("/fonts/hanchan-shouzhuo.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme inline {
+  --font-serif: "Noto Serif SC", "Songti SC", "Source Han Serif", serif;
+  --font-hand: "Ma Shan Zheng", "Caveat", cursive;
+  --font-script: "Caveat", "Ma Shan Zheng", cursive;
+  --font-keke: "BaiWuKeKe", "Ma Shan Zheng", "Caveat", cursive;
+  --font-hanchan: "HanChanShouZhuo", "Ma Shan Zheng", "Caveat", cursive;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-tape: var(--tape);
+  --color-coral: var(--coral);
+  --color-mustard: var(--mustard);
+  --color-mint: var(--mint);
+  --color-rose: var(--rose);
+  --color-sky-soft: var(--sky-soft);
+}
+
+:root {
+  --radius: 0.75rem;
+  /* Warm handmade paper */
+  --paper: oklch(0.965 0.025 82);
+  --ink: oklch(0.28 0.04 40);
+  --tape: oklch(0.85 0.11 88);
+
+  /* Playful accent set — coral / mustard / mint / rose / sky */
+  --coral: oklch(0.7 0.18 30);
+  --mustard: oklch(0.82 0.15 90);
+  --mint: oklch(0.82 0.11 165);
+  --rose: oklch(0.83 0.09 15);
+  --sky-soft: oklch(0.85 0.06 230);
+
+  --background: oklch(0.965 0.025 82);
+  --foreground: oklch(0.28 0.04 40);
+  --card: oklch(0.99 0.012 85);
+  --card-foreground: oklch(0.28 0.04 40);
+  --popover: oklch(0.99 0.012 85);
+  --popover-foreground: oklch(0.28 0.04 40);
+  --primary: oklch(0.66 0.18 30);        /* coral */
+  --primary-foreground: oklch(0.99 0.008 85);
+  --secondary: oklch(0.9 0.06 90);
+  --secondary-foreground: oklch(0.28 0.04 40);
+  --muted: oklch(0.92 0.03 85);
+  --muted-foreground: oklch(0.5 0.04 50);
+  --accent: oklch(0.78 0.14 55);         /* mustard-orange */
+  --accent-foreground: oklch(0.28 0.04 40);
+  --destructive: oklch(0.58 0.22 25);
+  --destructive-foreground: oklch(0.99 0.008 85);
+  --border: oklch(0.85 0.04 70);
+  --input: oklch(0.9 0.03 80);
+  --ring: oklch(0.66 0.16 40);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body, #root {
+    height: 100%;
+  }
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+  }
+}
+
+/* Paper texture background — 手帐方格本 + 暖色纸张 + 童趣点缀 */
+@utility paper-texture {
+  background-color: #faf2dd;
+  background-image:
+    /* 童趣点缀：小十字 / 圆点 / 波浪 / 小叉（极淡手绘感） */
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><g fill='none' stroke='%23c98a5e' stroke-width='2' stroke-linecap='round' opacity='0.13'><path d='M20 18 v10 M15 23 h10'/><circle cx='78' cy='30' r='3.2'/><path d='M108 58 q6 -8 12 0 q-6 8 -12 0'/><path d='M32 96 v8 M28 100 h8'/><path d='M100 106 l5 5 M105 106 l-5 5'/><path d='M58 120 q4 5 8 0'/><circle cx='130' cy='128' r='2.4'/></g></svg>"),
+    /* 手帐方格网格线 */
+    linear-gradient(to right, rgba(124, 92, 58, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 92, 58, 0.07) 1px, transparent 1px),
+    /* 暖色纸张渐变 */
+    linear-gradient(155deg, #fdf6e6 0%, #f7ecd2 52%, #efe1c0 100%);
+  background-size: 150px 150px, 28px 28px, 28px 28px, 100% 100%;
+  background-position: 0 0, -1px -1px, -1px -1px, 0 0;
+}
+
+@utility warm-paper {
+  background-color: oklch(0.97 0.025 80);
+  background-image:
+    radial-gradient(oklch(0.72 0.14 45 / 0.09) 1.2px, transparent 1.4px),
+    radial-gradient(oklch(0.78 0.14 90 / 0.07) 1.2px, transparent 1.4px),
+    linear-gradient(140deg, oklch(0.97 0.03 85) 0%, oklch(0.92 0.06 60) 100%);
+  background-size: 5px 5px, 9px 9px, 100% 100%;
+}
+
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.2  0 0 0 0 0.1  0 0 0 0.35 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+}
+
+@utility tape {
+  background: linear-gradient(
+    120deg,
+    oklch(0.88 0.1 90 / 0.6) 0%,
+    oklch(0.92 0.12 85 / 0.75) 50%,
+    oklch(0.85 0.09 85 / 0.55) 100%
+  );
+  box-shadow:
+    0 1px 2px oklch(0.3 0.05 40 / 0.15),
+    inset 0 0 20px oklch(1 0 0 / 0.2);
+  backdrop-filter: blur(0.5px);
+}
+
+/* 手撕胶带：牛皮纸胶带，边缘被撕扯的自然纹理（透明 PNG 做 mask） */
+@utility tape-torn {
+  position: relative;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  background-image: url("./assets/decor/tape-kraft.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: url("./assets/decor/tape-kraft.png");
+  mask-image: url("./assets/decor/tape-kraft.png");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  color: #4a3520;
+  text-shadow: 0 1px 0 rgba(255, 245, 220, 0.45);
+  transition: transform 0.18s ease, filter 0.18s ease;
+
+  &:hover {
+    transform: scale(1.06) rotate(var(--tape-tilt, 0deg));
+    animation: tape-wobble 0.6s ease-in-out;
+    filter: brightness(1.06);
+    z-index: 20;
+  }
+}
+
+/* 蓝色胶带：选中/激活状态，同样带撕扯边缘 */
+@utility tape-torn-blue {
+  position: relative;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  background-image: url("./assets/decor/tape-blue.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: url("./assets/decor/tape-blue.png");
+  mask-image: url("./assets/decor/tape-blue.png");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  color: #f4e8cf;
+  text-shadow: 0 1px 2px rgba(25, 40, 90, 0.5);
+  transition: transform 0.18s ease, filter 0.18s ease;
+
+  &:hover {
+    transform: scale(1.06) rotate(var(--tape-tilt, 0deg));
+    animation: tape-wobble 0.6s ease-in-out;
+    filter: brightness(1.08);
+    z-index: 20;
+  }
+}
+
+/* Handwriting draw animation */
+@keyframes draw-stroke {
+  from { stroke-dashoffset: var(--dash-len, 800); }
+  to { stroke-dashoffset: 0; }
+}
+@utility handwriting {
+  stroke-dasharray: var(--dash-len, 800);
+  stroke-dashoffset: var(--dash-len, 800);
+  animation: draw-stroke 2.4s ease-in-out forwards;
+}
+
+@keyframes envelope-open {
+  0%   { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+@keyframes card-rise {
+  0%   { transform: translateY(120%) scale(0.92); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: translateY(-40%) scale(1); opacity: 1; }
+}
+@keyframes page-flip {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(-170deg); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 胶带轻微晃动（hover 时触发一次） + 放大 */
+@keyframes tape-wobble {
+  0%   { transform: scale(1.06) rotate(calc(var(--tape-tilt, 0deg) - 2.5deg)); }
+  25%  { transform: scale(1.06) rotate(calc(var(--tape-tilt, 0deg) + 2.5deg)); }
+  50%  { transform: scale(1.06) rotate(calc(var(--tape-tilt, 0deg) - 1.5deg)); }
+  75%  { transform: scale(1.06) rotate(calc(var(--tape-tilt, 0deg) + 1.5deg)); }
+  100% { transform: scale(1.06) rotate(var(--tape-tilt, 0deg)); }
+}
+
+/* 实底牛皮胶带：用于导出海报中的 To / 署名，避免 mask 在 html-to-image 中丢失 */
+@utility tape-solid {
+  background-color: transparent;
+  background-image: url("./assets/decor/tape-kraft.png");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #4a3520;
+  text-shadow: 0 1px 0 rgba(255, 245, 220, 0.45);
+}
+
+/* 自然撕纸边缘：用 clip-path 让元素呈现手撕纸张的不规则轮廓。
+   基于百分比，随元素尺寸自适应；比 mask-image 更稳，导出时也能保留。
+   深度 0.4%~6.5%，多数细纤维、偶发深撕，呈自然手撕质感。 */
+@utility torn-paper {
+  clip-path: polygon(
+    0% 5.9%, 5% 1.3%, 10% 5.76%, 15% 3.64%, 20% 4.18%, 25% 2.96%, 30% 4.43%,
+    35% 1.4%, 40% 0.68%, 45% 4.2%, 50% 3.59%, 55% 0.9%, 60% 3.75%, 65% 4.2%,
+    70% 6.47%, 75% 3.6%, 80% 6.15%, 85% 3.22%, 90% 1.6%, 95% 4.29%, 100% 1.7%,
+    97.73% 5%, 97.81% 10%, 99.28% 15%, 97.62% 20%, 97.25% 25%, 97.66% 30%,
+    97.92% 35%, 98.12% 40%, 96.32% 45%, 99.31% 50%, 96.94% 55%, 99.15% 60%,
+    96.11% 65%, 94.63% 70%, 95.82% 75%, 95.75% 80%, 98.77% 85%, 96.4% 90%,
+    99.36% 95%, 95.93% 100%, 95% 97.76%, 90% 95.56%, 85% 95.26%, 80% 97.78%,
+    75% 98.87%, 70% 99.52%, 65% 97.8%, 60% 93.6%, 55% 96.38%, 50% 98.81%,
+    45% 98.81%, 40% 94.35%, 35% 98.58%, 30% 96.46%, 25% 97.87%, 20% 93.99%,
+    15% 97.81%, 10% 96.79%, 5% 97.37%, 0% 96.32%, 2.12% 95%, 0.44% 90%,
+    3.29% 85%, 0.92% 80%, 2.12% 75%, 4.07% 70%, 2.16% 65%, 0.74% 60%,
+    1.25% 55%, 0.76% 50%, 1.48% 45%, 2.55% 40%, 5.51% 35%, 3.89% 30%,
+    1.84% 25%, 1.79% 20%, 5.2% 15%, 0.8% 10%, 3.92% 5%
+  );
+}
